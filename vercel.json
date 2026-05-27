@@ -2,11 +2,11 @@
   "rewrites": [
     {
       "source": "/services",
-      "destination": "https://binary-podcasting.vercel.app/services"
+      "destination": "https://podcasting-binary.vercel.app/services"
     },
     {
       "source": "/services/:match*",
-      "destination": "https://binary-podcasting.vercel.app/services/:match*"
+      "destination": "https://podcasting-binary.vercel.app/services/:match*"
     }
   ]
 }
