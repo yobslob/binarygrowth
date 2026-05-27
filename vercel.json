@@ -1,0 +1,12 @@
+{
+  "rewrites": [
+    {
+      "source": "/services",
+      "destination": "https://binary-podcasting.vercel.app/services"
+    },
+    {
+      "source": "/services/:match*",
+      "destination": "https://binary-podcasting.vercel.app/services/:match*"
+    }
+  ]
+}
