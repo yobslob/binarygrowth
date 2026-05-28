@@ -482,7 +482,7 @@ function ServiceCard({
             {subheading}
           </div>
         )}
-        <div style={{ marginTop: "1.2rem", textAlign: "right" }}>
+        {/* <div style={{ marginTop: "1.2rem", textAlign: "right" }}>
           <Link
             href={
               num === "01"
@@ -496,7 +496,7 @@ function ServiceCard({
             More Videos
             <span className="arrow-icon">↗</span>
           </Link>
-        </div>
+        </div> */}
       </div>
 
       <style>{`
