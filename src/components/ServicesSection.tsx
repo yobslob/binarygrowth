@@ -482,18 +482,18 @@ function ServiceCard({
             {subheading}
           </div>
         )}
-        <div style={{ marginTop: "1.2rem", textAlign: "left" }}>
+        <div style={{ marginTop: "1.2rem", textAlign: "right" }}>
           <Link
             href={
               num === "01"
                 ? "/podcasting"
                 : num === "02"
-                ? "/launch-videos"
-                : "/clipping"
+                  ? "/launch-videos"
+                  : "/clipping"
             }
             className="view-more-link"
           >
-            View More
+            More Videos
             <span className="arrow-icon">↗</span>
           </Link>
         </div>
