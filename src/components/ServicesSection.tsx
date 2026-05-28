@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Video from "next-video";
+import Link from "next/link";
 
 import he1 from "../../videos/he1_the_real_me.mp4.json";
 import he2 from "../../videos/he2_whyre_u_always_smiling.mp4.json";
@@ -481,9 +482,49 @@ function ServiceCard({
             {subheading}
           </div>
         )}
+        <div style={{ marginTop: "1.2rem", textAlign: "left" }}>
+          <Link
+            href={
+              num === "01"
+                ? "/podcasting"
+                : num === "02"
+                ? "/launch-videos"
+                : "/clipping"
+            }
+            className="view-more-link"
+          >
+            View More
+            <span className="arrow-icon">↗</span>
+          </Link>
+        </div>
       </div>
 
       <style>{`
+        .view-more-link {
+          display: inline-flex;
+          align-items: center;
+          font-family: 'DM Sans', sans-serif;
+          font-size: 0.85rem;
+          font-weight: 600;
+          color: var(--accent);
+          text-decoration: none;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+          transition: all 0.3s ease;
+          gap: 0.4rem;
+          cursor: pointer;
+        }
+        .view-more-link:hover {
+          color: #ffffff;
+        }
+        .view-more-link:hover .arrow-icon {
+          transform: translate(2px, -2px);
+        }
+        .arrow-icon {
+          transition: transform 0.3s ease;
+          display: inline-block;
+        }
+
         .service-card {
           width: 90%;
           max-width: 900px;

@@ -6,9 +6,9 @@ import { useTheme } from "next-themes";
 
 const footerLinks = {
   Services: [
-    { label: "Podcasting", href: "#services" },
-    { label: "Brand Launch Videos", href: "#services" },
-    { label: "Content Clipping", href: "#services" },
+    { label: "Podcasting", href: "/podcasting" },
+    { label: "Brand Launch Videos", href: "/launch-videos" },
+    { label: "Content Clipping", href: "/clipping" },
   ],
   Company: [
     { label: "About Us", href: "#about" },
@@ -187,14 +187,7 @@ export function Footer() {
           >
             Cookie Policy
           </button>
-          <button
-            onClick={() => typeof window !== "undefined" && window.dispatchEvent(new CustomEvent("open-stats-dashboard"))}
-            style={{ background: "none", border: "none", cursor: "pointer", padding: 0 }}
-            className="footer-mini-link"
-            title="Press Ctrl+Shift+A to toggle console"
-          >
-            Console ⚡
-          </button>
+
         </div>
       </div>
 

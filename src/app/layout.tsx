@@ -22,22 +22,22 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Binary Growth | Defining New Media",
+  title: "Binary Growth",
   description:
     "We grow creators and brands across YouTube, podcasts, and short-form video. 2B+ views generated, 30K+ videos produced, 480+ relationships built.",
   keywords:
     "video production, YouTube growth, podcast production, short-form video, creator economy, media agency, brand launch",
   openGraph: {
-    title: "Binary Growth | Defining New Media",
+    title: "Binary Growth",
     description:
       "We grow creators and brands across YouTube, podcasts, and short-form video. 2B+ views generated, 30K+ videos produced, 480+ relationships built.",
     type: "website",
-    url: "https://www.binarygrowth.com",
+    url: "https://binarygrowth.org",
     siteName: "Binary Growth",
     locale: "en_US",
     images: [
       {
-        url: "https://www.binarygrowth.com/white_logo.png",
+        url: "https://binarygrowth.org/white_logo.png",
         width: 800,
         height: 800,
         alt: "Binary Growth Logo",
@@ -46,10 +46,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Binary Growth | Defining New Media",
+    title: "Binary Growth",
     description:
       "We grow creators and brands across YouTube, podcasts, and short-form video.",
-    images: ["https://www.binarygrowth.com/white_logo.png"],
+    images: ["https://binarygrowth.org/white_logo.png"],
   },
   icons: {
     icon: "/white_logo.png",
@@ -60,8 +60,8 @@ const jsonLdData = {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Binary Growth",
-  "url": "https://www.binarygrowth.com",
-  "logo": "https://www.binarygrowth.com/white_logo.png",
+  "url": "https://binarygrowth.org",
+  "logo": "https://binarygrowth.org/white_logo.png",
   "description": "We grow creators and brands across YouTube, podcasts, and short-form video. 2B+ views generated, 30K+ videos produced.",
   "sameAs": [
     "https://youtube.com",
@@ -72,7 +72,7 @@ const jsonLdData = {
   "contactPoint": {
     "@type": "ContactPoint",
     "contactType": "sales",
-    "email": "contact@binarygrowth.com"
+    "email": "contact@binarygrowth.org"
   }
 };
 

@@ -1,12 +1,28 @@
 {
   "rewrites": [
     {
-      "source": "/services",
-      "destination": "https://podcasting-binary.vercel.app/services"
+      "source": "/podcasting",
+      "destination": "https://binary-podcasting.vercel.app/podcasting"
     },
     {
-      "source": "/services/:match*",
-      "destination": "https://podcasting-binary.vercel.app/services/:match*"
+      "source": "/podcasting/:match*",
+      "destination": "https://binary-podcasting.vercel.app/podcasting/:match*"
+    },
+    {
+      "source": "/launch-videos",
+      "destination": "https://binary-launch-videos.vercel.app/launch-videos"
+    },
+    {
+      "source": "/launch-videos/:match*",
+      "destination": "https://binary-launch-videos.vercel.app/launch-videos/:match*"
+    },
+    {
+      "source": "/clipping",
+      "destination": "https://binary-clipping.vercel.app/clipping"
+    },
+    {
+      "source": "/clipping/:match*",
+      "destination": "https://binary-clipping.vercel.app/clipping/:match*"
     }
   ]
 }
