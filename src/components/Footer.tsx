@@ -11,7 +11,7 @@ const footerLinks = {
     { label: "Content Clipping", href: "/clipping" },
   ],
   Company: [
-    { label: "About Us", href: "#about" },
+    { label: "About Us", href: "https://binarygrowth.org/#" },
     { label: "Our Work", href: "#work" },
     { label: "Case Studies", href: "#work" },
   ],
