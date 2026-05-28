@@ -10,11 +10,11 @@
     },
     {
       "source": "/launch-videos",
-      "destination": "https://launch-videos-binary.vercel.app/launch-videos"
+      "destination": "https://launch-video-binary.vercel.app/launch-videos"
     },
     {
       "source": "/launch-videos/:match*",
-      "destination": "https://launch-videos-binary.vercel.app/launch-videos/:match*"
+      "destination": "https://launch-video-binary.vercel.app/launch-videos/:match*"
     },
     {
       "source": "/clipping",
