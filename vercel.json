@@ -1,1 +1,28 @@
-{}
+{
+  "rewrites": [
+    {
+      "source": "/podcasting",
+      "destination": "https://podcasting-binary.vercel.app/podcasting"
+    },
+    {
+      "source": "/podcasting/:match*",
+      "destination": "https://podcasting-binary.vercel.app/podcasting/:match*"
+    },
+    {
+      "source": "/launch-videos",
+      "destination": "https://launch-videos-binary.vercel.app/launch-videos"
+    },
+    {
+      "source": "/launch-videos/:match*",
+      "destination": "https://launch-videos-binary.vercel.app/launch-videos/:match*"
+    },
+    {
+      "source": "/clipping",
+      "destination": "https://clipping-binary.vercel.app/clipping"
+    },
+    {
+      "source": "/clipping/:match*",
+      "destination": "https://clipping-binary.vercel.app/clipping/:match*"
+    }
+  ]
+}
