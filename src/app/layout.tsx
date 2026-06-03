@@ -32,14 +32,14 @@ export const metadata: Metadata = {
     description:
       "We grow creators and brands across YouTube, podcasts, and short-form video. 2B+ views generated, 30K+ videos produced, 480+ relationships built.",
     type: "website",
-    url: "https://binarygrowth.org",
+    url: "www.binarygrowth.org",
     siteName: "Binary Growth",
     locale: "en_US",
     images: [
       {
         url: "https://binarygrowth.org/white_logo.png",
-        width: 800,
-        height: 800,
+        width: 576,
+        height: 576,
         alt: "Binary Growth Logo",
       },
     ],
