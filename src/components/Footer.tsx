@@ -6,9 +6,9 @@ import { useTheme } from "next-themes";
 
 const footerLinks = {
   Services: [
-    { label: "Podcasting", href: "/podcasting" },
-    { label: "Brand Launch Videos", href: "/launch-videos" },
-    { label: "Content Clipping", href: "/clipping" },
+    { label: "Podcasting", href: "/#services" },
+    { label: "Brand Launch Videos", href: "/#services" },
+    { label: "Content Clipping", href: "/#services" },
   ],
   Company: [
     { label: "About Us", href: "https://binarygrowth.org/#" },
