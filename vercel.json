@@ -23,14 +23,14 @@
     {
       "source": "/clipping/:match*",
       "destination": "https://clipping-binary.vercel.app/clipping/:match*"
-    }
+    },
     {
       "source": "/editors",
       "destination": "https://binary-admin-black.vercel.app/editors"
     },
     {
-      "source": "/podcasting/:match*",
+      "source": "/editors/:match*",
       "destination": "https://binary-admin-black.vercel.app/editors/:match*"
-    },
+    }
   ]
 }
