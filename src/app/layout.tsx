@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, Playfair_Display } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 import { AnalyticsTracker } from "@/components/AnalyticsTracker";
 import { StatsDashboard } from "@/components/StatsDashboard";
 import { PolicyModal } from "@/components/PolicyModal";
@@ -98,6 +99,7 @@ export default function RootLayout({
         <StatsDashboard />
         <PolicyModal />
         {children}
+        <Analytics />
       </body>
     </html>
   );
