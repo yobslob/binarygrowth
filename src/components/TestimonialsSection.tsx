@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import Video from "next-video";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 
@@ -40,6 +40,7 @@ interface VideoCardProps {
   name: string;
   playbackId: string;
   isActive: boolean;
+  isMobile: boolean;
   onActivate: () => void;
   onDeactivate: () => void;
 }
@@ -49,32 +50,36 @@ function TestimonialVideoPlayer({
   name,
   playbackId,
   isActive,
+  isMobile,
   onActivate,
   onDeactivate,
 }: VideoCardProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
 
-  const togglePlay = () => {
-    if (!videoRef.current) return;
+  // Sync play/pause with isActive state (triggered by card hover on desktop or tap on mobile)
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+
     if (isActive) {
-      videoRef.current.pause();
+      el.play().catch(() => {
+        // Fallback to muted autoplay if browser blocks unmuted playback
+        el.muted = true;
+        setIsMuted(true);
+        el.play().catch(() => {});
+      });
+    } else {
+      el.pause();
+    }
+  }, [isActive]);
+
+  const handleVideoClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (isActive) {
       onDeactivate();
     } else {
-      videoRef.current
-        .play()
-        .then(() => {
-          onActivate();
-        })
-        .catch(() => {
-          if (videoRef.current) {
-            videoRef.current.muted = true;
-            setIsMuted(true);
-            videoRef.current.play();
-            onActivate();
-          }
-        });
+      onActivate();
     }
   };
 
@@ -90,9 +95,7 @@ function TestimonialVideoPlayer({
   return (
     <div
       className="testimonial-video-container"
-      onClick={togglePlay}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
+      onClick={handleVideoClick}
       style={{ cursor: "pointer" }}
     >
       {/* Ambient blurred backdrop for letterboxed videos */}
@@ -117,9 +120,7 @@ function TestimonialVideoPlayer({
         muted={isMuted}
         playsInline
         controls={false}
-        onPause={() => {
-          if (isActive) onDeactivate();
-        }}
+        loop
         onEnded={onDeactivate}
         style={{
           position: "relative",
@@ -131,7 +132,7 @@ function TestimonialVideoPlayer({
         }}
       />
 
-      {/* Center Play/Pause button */}
+      {/* Center Play button: visible by default, smoothly hides when playing */}
       <div
         style={{
           position: "absolute",
@@ -141,8 +142,9 @@ function TestimonialVideoPlayer({
           justifyContent: "center",
           zIndex: 5,
           pointerEvents: "none",
-          opacity: !isActive || isHovered ? 1 : 0,
-          transition: "opacity 0.25s ease",
+          opacity: isActive ? 0 : 1,
+          transform: isActive ? "scale(0.85)" : "scale(1)",
+          transition: "opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
         <div
@@ -150,7 +152,7 @@ function TestimonialVideoPlayer({
             width: "52px",
             height: "52px",
             borderRadius: "50%",
-            background: "rgba(10, 10, 10, 0.7)",
+            background: "rgba(10, 10, 10, 0.72)",
             backdropFilter: "blur(12px)",
             WebkitBackdropFilter: "blur(12px)",
             border: "1px solid rgba(255, 255, 255, 0.25)",
@@ -159,19 +161,14 @@ function TestimonialVideoPlayer({
             justifyContent: "center",
             color: "#fff",
             boxShadow: "0 8px 24px rgba(0, 0, 0, 0.5)",
-            transform: isHovered ? "scale(1.08)" : "scale(1)",
             transition: "transform 0.2s cubic-bezier(0.16, 1, 0.3, 1)",
           }}
         >
-          {isActive ? (
-            <Pause size={20} fill="currentColor" />
-          ) : (
-            <Play size={20} fill="currentColor" style={{ marginLeft: "3px" }} />
-          )}
+          <Play size={20} fill="currentColor" style={{ marginLeft: "3px" }} />
         </div>
       </div>
 
-      {/* Mute/Unmute Toggle in bottom right */}
+      {/* Mute/Unmute Toggle in bottom right when video is active */}
       {isActive && (
         <button
           onClick={toggleMute}
@@ -204,6 +201,18 @@ function TestimonialVideoPlayer({
 
 export function TestimonialsSection() {
   const [activePlayingIndex, setActivePlayingIndex] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(
+        window.innerWidth <= 768 || window.matchMedia("(hover: none)").matches
+      );
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
     <section
@@ -244,59 +253,76 @@ export function TestimonialsSection() {
       </div>
 
       <div className="testimonial-list">
-        {testimonials.map((t, i) => (
-          <div
-            key={i}
-            className="card testimonial-card testimonial-card-inner"
-          >
-            {/* Left: Video Card */}
-            <TestimonialVideoPlayer
-              video={t.video}
-              name={t.name}
-              playbackId={t.playbackId}
-              isActive={activePlayingIndex === i}
-              onActivate={() => setActivePlayingIndex(i)}
-              onDeactivate={() => {
-                if (activePlayingIndex === i) setActivePlayingIndex(null);
-              }}
-            />
+        {testimonials.map((t, i) => {
+          const isCardActive = activePlayingIndex === i;
 
-            {/* Right: Review Content */}
-            <div className="testimonial-content-container">
-              <p
-                style={{
-                  fontSize: "1.1rem",
-                  color: "var(--text-primary)",
-                  lineHeight: 1.6,
-                  fontStyle: "italic",
+          return (
+            <div
+              key={i}
+              className={`card testimonial-card testimonial-card-inner ${isCardActive ? "active" : ""}`}
+              onMouseEnter={() => {
+                if (!isMobile) {
+                  setActivePlayingIndex(i);
+                }
+              }}
+              onMouseLeave={() => {
+                if (!isMobile) {
+                  if (activePlayingIndex === i) {
+                    setActivePlayingIndex(null);
+                  }
+                }
+              }}
+            >
+              {/* Left: Video Card */}
+              <TestimonialVideoPlayer
+                video={t.video}
+                name={t.name}
+                playbackId={t.playbackId}
+                isActive={isCardActive}
+                isMobile={isMobile}
+                onActivate={() => setActivePlayingIndex(i)}
+                onDeactivate={() => {
+                  if (activePlayingIndex === i) setActivePlayingIndex(null);
                 }}
-              >
-                &ldquo;{t.quote}&rdquo;
-              </p>
-              <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
-                <div
+              />
+
+              {/* Right: Review Content */}
+              <div className="testimonial-content-container">
+                <p
                   style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontWeight: 600,
-                    fontSize: "0.95rem",
+                    fontSize: "1.1rem",
                     color: "var(--text-primary)",
+                    lineHeight: 1.6,
+                    fontStyle: "italic",
                   }}
                 >
-                  {t.name}
-                </div>
-                <div
-                  style={{
-                    fontFamily: "'DM Sans', sans-serif",
-                    fontSize: "0.8rem",
-                    color: "var(--text-secondary)",
-                  }}
-                >
-                  {t.role}
+                  &ldquo;{t.quote}&rdquo;
+                </p>
+                <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
+                  <div
+                    style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontWeight: 600,
+                      fontSize: "0.95rem",
+                      color: "var(--text-primary)",
+                    }}
+                  >
+                    {t.name}
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "'DM Sans', sans-serif",
+                      fontSize: "0.8rem",
+                      color: "var(--text-secondary)",
+                    }}
+                  >
+                    {t.role}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       <style>{`
